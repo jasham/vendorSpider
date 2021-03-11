@@ -5,9 +5,6 @@ import PropTypes from 'prop-types';
 import TextField from '@material-ui/core/TextField';
 import CloseIcon from '@material-ui/icons/Close';
 import Text from '../text';
-import Select from '../select';
-import DatePicker from '../datePicker';
-import TimePicker from '../timePicker';
 import Button from '../button';
 
 const styles = {
@@ -36,29 +33,11 @@ const styles = {
   },
 };
 
-const Bookings = ({
-  classes,
-  // servicesPlaceholder,
-  categoryData,
-  onChangeCategory,
-  onChangeServices,
-  currentCategory,
-  currentService,
-  serviceData,
-  handleDateChange,
-  selectedDate,
-  handleTimeChange,
-  selectedTime,
-  onSubmit,
-  onHandelClose,
-  closeButton,
-  onChangeDescription,
-  descValue,
-}) => (
+const Bookings = ({ classes, onSubmit, onHandelClose, closeButton }) => (
   <Box className={classes.root}>
     <Box className={classes.header}>
       <Text variant="h6" fWeight={600} ffamily="Poppins">
-        Select Our Services
+        Login
       </Text>
       {closeButton ? (
         <div>
@@ -66,66 +45,39 @@ const Bookings = ({
         </div>
       ) : null}
     </Box>
+    <Box display="flex" style={{ gap: '10px' }} flexDirection="column">
+      <TextField
+        id="email"
+        label="Email Address"
+        type="email"
+        fullWidth
+        variant="outlined"
+        // value={email}
+        // onChange={(e) => setEmail(e.target.value)}
+      />
+      {/* <div style={{ marginBottom: '10px' }} /> */}
+      <TextField
+        id="password"
+        label="Password"
+        type="password"
+        fullWidth
+        variant="outlined"
+        // value={password}
+        // onChange={(e) => setPassword(e.target.value)}
+      />
+    </Box>
     <Box>
-      <Select
-        placeholder="Select Category"
-        options={categoryData}
-        handleChange={onChangeCategory}
-        value={currentCategory}
-      />
-      <Select
-        placeholder="Select Services"
-        options={serviceData}
-        handleChange={onChangeServices}
-        value={currentService}
-        multiple
-      />
-      <DatePicker
-        selectedDate={selectedDate}
-        handleDateChange={handleDateChange}
-      />
-      <TimePicker
-        selectedTime={selectedTime}
-        handleTimeChange={handleTimeChange}
-      />
-      <Box className={classes.marginTop}>
-        <TextField
-          id="outlined-multiline-static"
-          label="Description"
-          multiline
-          rows={2}
-          variant="outlined"
-          className={classes.textField}
-          onChange={onChangeDescription}
-          value={descValue}
-        />
-      </Box>
-      <Box>
-        <Button className={classes.marginTop} onClick={onSubmit}>
-          Submit
-        </Button>
-      </Box>
+      <Button className={classes.marginTop} onClick={onSubmit}>
+        Submit
+      </Button>
     </Box>
   </Box>
 );
 
 Bookings.propTypes = {
-  // servicesPlaceholder: PropTypes.string,
-  categoryData: PropTypes.array,
-  onChangeCategory: PropTypes.func,
-  onChangeServices: PropTypes.func,
-  currentCategory: PropTypes.string,
-  currentService: PropTypes.array,
-  serviceData: PropTypes.array,
-  selectedDate: PropTypes.string,
-  handleDateChange: PropTypes.func,
-  selectedTime: PropTypes.string,
-  handleTimeChange: PropTypes.func,
   onSubmit: PropTypes.func,
   onHandelClose: PropTypes.func,
   closeButton: PropTypes.bool,
-  onChangeDescription: PropTypes.func,
-  descValue: PropTypes.string,
 };
 
 export default withStyles(styles)(Bookings);
