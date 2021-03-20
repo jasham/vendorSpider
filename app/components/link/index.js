@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import Link from 'next/link';
 import { Link as MaterialLink } from '@material-ui/core';
 import { string, func } from 'prop-types';
@@ -19,18 +19,19 @@ const UnstyleLink = withStyles({
     },
   }),
 })(MaterialLink);
-const Links = ({ children, className, href, onClick }) => (
+const Links = forwardRef(({ children, className, href, onClick }, ref) => (
   <Link href={href} passHref style={{ fontFamily: 'Poppins' }}>
     <UnstyleLink
       component="a"
       className={className}
       onClick={onClick}
       rel="noopener noreferrer"
+      ref={ref}
     >
       {children}
     </UnstyleLink>
   </Link>
-);
+));
 Links.propTypes = {
   href: string,
   onClick: func,
