@@ -3,6 +3,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import VerticalTab from '../../components/vertical-tab';
 import MiniDrawer from '../../components/drawer';
+import OrderTab from './orders';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -39,7 +40,7 @@ const Tab = () => {
             data={[
               {
                 label: 'Orders',
-                children: <div>Orders</div>,
+                children: <OrderTab />,
               },
               {
                 label: 'MyServices',
