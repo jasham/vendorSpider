@@ -2,6 +2,7 @@ import { Box } from '@material-ui/core';
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import DropDown from '../../../components/dropdown';
+import OrderCard from './order-card';
 
 const useStyles = makeStyles(() => ({
   dropdown: {
@@ -28,6 +29,7 @@ const OrderTab = () => {
           className={classes.dropdown}
         />
       </Box>
+      <OrderCard />
     </>
   );
 };

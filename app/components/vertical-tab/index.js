@@ -18,7 +18,7 @@ function TabPanel(props) {
       {...other}
       style={{ width: '100%' }}
     >
-      {value === index && <Box>{children}</Box>}
+      {value === index && <Box padding="10px">{children}</Box>}
     </div>
   );
 }
@@ -66,6 +66,7 @@ const VerticalTab = ({ data, className }) => {
         onChange={handleChange}
         aria-label="Vertical tabs example"
         className={classes.tabs}
+        id="main-tab"
       >
         {data.map((item, idx) => (
           <Tab label={item.label} {...a11yProps(idx)} key={idx.toString()} />
