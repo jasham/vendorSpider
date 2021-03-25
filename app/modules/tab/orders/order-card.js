@@ -9,7 +9,7 @@ import React from 'react';
 
 const OrderCard = () => (
   <Card variant="outlined" style={{ marginTop: '10px' }}>
-    <CardContent>
+    <CardContent style={{ paddingBottom: 0 }}>
       <Typography component="p" variant="h5" style={{ color: '#34A76C' }}>
         <b> Order No:</b>
         <Typography component="span" style={{ color: 'black' }}>
@@ -21,7 +21,10 @@ const OrderCard = () => (
           <b>Mechanic</b>
         </Typography>
         <Typography>
-          loerum kmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
+          Lorem Ipsum is simply dummy text of the printing and typesetting
+          industry. Lorem Ipsum has been the industry&apos;s standard dummy text
+          ever since the 1500s, when an unknown printer took a galley of type
+          and scrambled it to make a type specimen book.
         </Typography>
         <Typography style={{ color: 'rgba(0,0,0,0.3)', whiteSpace: 'no-wrap' }}>
           <b> Distance:</b>
@@ -30,7 +33,7 @@ const OrderCard = () => (
             component="span"
             variant="body2"
           >
-            20KM
+            <b>20KM</b>
           </Typography>
         </Typography>
       </Box>

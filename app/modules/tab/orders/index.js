@@ -11,14 +11,14 @@ const useStyles = makeStyles(() => ({
 }));
 
 const OrderTab = () => {
-  const [val, setVal] = useState();
+  const [val, setVal] = useState('Open');
   const classes = useStyles();
   return (
-    <>
+    <div>
       <Box display="flex" justifyContent="flex-end">
         <DropDown
           label="Order Status"
-          options={['Accept', 'Inprocess', 'Completed', 'Dispute'].map(
+          options={['Open', 'Accept', 'Inprocess', 'Completed', 'Dispute'].map(
             (item) => ({
               label: item,
               value: item,
@@ -30,7 +30,7 @@ const OrderTab = () => {
         />
       </Box>
       <OrderCard />
-    </>
+    </div>
   );
 };
 

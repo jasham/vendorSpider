@@ -1,5 +1,5 @@
-import { Container } from '@material-ui/core';
-import React from 'react';
+import { Box, Container } from '@material-ui/core';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import VerticalTab from '../../components/vertical-tab';
 import MiniDrawer from '../../components/drawer';
@@ -29,14 +29,28 @@ const useStyles = makeStyles((theme) => ({
 }));
 const Tab = () => {
   const classes = useStyles();
+  const [currentPage, setCurrentPage] = useState();
+  const showCurrentPage = () => {
+    switch (currentPage) {
+      case 0:
+        return <OrderTab />;
+      case 1:
+        return <div>My Services</div>;
+      default:
+        return <OrderTab />;
+    }
+  };
   return (
     <Container>
       <div>
         <div className={classes.drawer}>
-          <MiniDrawer>drwer</MiniDrawer>
+          <MiniDrawer>
+            <Box marginTop={2}>{showCurrentPage()}</Box>
+          </MiniDrawer>
         </div>
         <div className={classes.tab}>
           <VerticalTab
+            returnName={(val) => setCurrentPage(val)}
             data={[
               {
                 label: 'Orders',
@@ -56,7 +70,7 @@ const Tab = () => {
               },
               {
                 label: 'About US',
-                children: <div>About US</div>,
+                children: <div>About Us</div>,
               },
               {
                 label: 'Logout',

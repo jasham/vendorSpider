@@ -2,6 +2,7 @@
 import React, { useContext, useEffect } from 'react';
 import { element } from 'prop-types';
 import { Box } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import Header from '../header';
 import Footer from '../footer';
 import { GlobalContext } from '../../../pages/_app';
@@ -13,9 +14,19 @@ import {
 import { subCatService } from '../../lib/services/home';
 import LoadingBar from '../loading';
 
+const useStyles = makeStyles({
+  root: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+  },
+});
+
 const Layout = ({ children }) => {
   const globalContext = useContext(GlobalContext);
-
+  const classes = useStyles();
   useEffect(() => {
     subCatService().then((cdata) => {
       const tempArr = [];
@@ -61,9 +72,9 @@ const Layout = ({ children }) => {
   }, []);
 
   return (
-    <Box id="new">
+    <Box id="new" className={classes.root}>
       <Header />
-      {children}
+      <Box height="calc(100% - 50px)">{children}</Box>
       <Footer />
 
       {globalContext.state.loadingBarStatus ? <LoadingBar /> : null}

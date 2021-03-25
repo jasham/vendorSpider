@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes, { any, arrayOf, objectOf } from 'prop-types';
+import PropTypes, { any, arrayOf, func, objectOf } from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -45,15 +45,26 @@ const useStyles = makeStyles((theme) => ({
   },
   tabs: {
     borderRight: `1px solid ${theme.palette.divider}`,
+    '& .MuiTabs-scrollable': {
+      overflowX: 'unset !important',
+    },
+  },
+  tabLabel: {
+    textTransform: 'none',
+    // alignItems: 'flex-start',
+    '& span': {
+      alignItems: 'flex-start',
+    },
   },
 }));
 
-const VerticalTab = ({ data, className }) => {
+const VerticalTab = ({ data, className, returnName }) => {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
     event.preventDefault();
+    returnName(newValue);
     setValue(newValue);
   };
 
@@ -69,7 +80,12 @@ const VerticalTab = ({ data, className }) => {
         id="main-tab"
       >
         {data.map((item, idx) => (
-          <Tab label={item.label} {...a11yProps(idx)} key={idx.toString()} />
+          <Tab
+            label={item.label}
+            {...a11yProps(idx)}
+            key={idx.toString()}
+            className={classes.tabLabel}
+          />
         ))}
       </Tabs>
       {data.map((item, idx) => (
@@ -82,5 +98,6 @@ const VerticalTab = ({ data, className }) => {
 };
 VerticalTab.propTypes = {
   data: arrayOf(objectOf(any)),
+  returnName: func,
 };
 export default VerticalTab;

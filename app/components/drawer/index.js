@@ -3,7 +3,6 @@ import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import {
   IconButton,
-  Collapse,
   Divider,
   List,
   AppBar,
@@ -16,9 +15,8 @@ import {
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import ExpandLess from '@material-ui/icons/ExpandLess';
-import ExpandMore from '@material-ui/icons/ExpandMore';
-import menuData from './nav';
+
+// import menuData from './nav';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -133,6 +131,11 @@ const useStyles = makeStyles((theme) => ({
       // minHeight: '100vh',
     },
   },
+  dWidth: {
+    '& .MuiDrawer-paper': {
+      width: '50% !important',
+    },
+  },
   // toolBar: {
   //   [theme.breakpoints.down('sm')]: {
   //     minHeight: theme.mixins.toolbar.minHeight + 50,
@@ -153,47 +156,47 @@ const MiniDrawer = ({ children }) => {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-  const [sideMenuItems, setSideMenuItems] = React.useState([...menuData]);
+  // const [sideMenuItems, setSideMenuItems] = React.useState([...menuData]);
   const handleDrawerOpen = () => {
     setOpen(true);
   };
   const handleDrawerClose = () => {
     setOpen(false);
   };
-  const handleClick = (event, index) => {
-    event.preventDefault();
-    setSideMenuItems(() => {
-      const final = sideMenuItems;
-      final[index].expand = !final[index].expand;
-      return [...final];
-    });
-  };
-  const handleInClick = (event, title, key, subTitle) => {
-    event.preventDefault();
-    setSideMenuItems(() => {
-      const menus = sideMenuItems.map((item) =>
-        item.title === title
-          ? {
-              ...item,
-              subHeaders: {
-                ...item.subHeaders,
-                [key]: [
-                  ...item.subHeaders[key].map((changeExpandItem) =>
-                    changeExpandItem.subTitle === subTitle
-                      ? {
-                          ...changeExpandItem,
-                          expand: !changeExpandItem.expand,
-                        }
-                      : { ...changeExpandItem },
-                  ),
-                ],
-              },
-            }
-          : { ...item },
-      );
-      return [...menus];
-    });
-  };
+  // const handleClick = (event, index) => {
+  //   event.preventDefault();
+  //   setSideMenuItems(() => {
+  //     const final = sideMenuItems;
+  //     final[index].expand = !final[index].expand;
+  //     return [...final];
+  //   });
+  // };
+  // const handleInClick = (event, title, key, subTitle) => {
+  //   event.preventDefault();
+  //   setSideMenuItems(() => {
+  //     const menus = sideMenuItems.map((item) =>
+  //       item.title === title
+  //         ? {
+  //             ...item,
+  //             subHeaders: {
+  //               ...item.subHeaders,
+  //               [key]: [
+  //                 ...item.subHeaders[key].map((changeExpandItem) =>
+  //                   changeExpandItem.subTitle === subTitle
+  //                     ? {
+  //                         ...changeExpandItem,
+  //                         expand: !changeExpandItem.expand,
+  //                       }
+  //                     : { ...changeExpandItem },
+  //                 ),
+  //               ],
+  //             },
+  //           }
+  //         : { ...item },
+  //     );
+  //     return [...menus];
+  //   });
+  // };
   return (
     <>
       <Box style={{ minHeight: '100vh' }}>
@@ -224,15 +227,21 @@ const MiniDrawer = ({ children }) => {
                   justifyContent: 'center',
                 }}
               >
-                <img
+                {/* <img
                   src="/static/images/homepage/Csmart_white.svg"
                   alt="csmart"
                   className={classes.img}
-                />
+                /> */}
               </div>
             </Toolbar>
           </AppBar>
-          <Drawer anchor="left" open={open} onClose={() => setOpen(false)}>
+          <Drawer
+            anchor="left"
+            open={open}
+            onClose={() => setOpen(false)}
+            className={classes.dWidth}
+            width="50% !important"
+          >
             <div className={classes.toolbar}>
               <IconButton onClick={handleDrawerClose}>
                 {theme.direction === 'rtl' ? (
@@ -245,105 +254,20 @@ const MiniDrawer = ({ children }) => {
             <Divider />
             <List>
               <ListItem button>
-                <ListItemText primary="Personal" />
+                <ListItemText primary="Orders" />
               </ListItem>
               <ListItem button>
-                <ListItemText primary="Business" />
+                <ListItemText primary="My Services" />
               </ListItem>
               <ListItem button>
-                <ListItemText primary="Find a Store" />
+                <ListItemText primary="Profile" />
               </ListItem>
               <ListItem button>
-                {/* <Link href="#">
-                  <Links color="inherit"> */}
-                <ListItemText primary="Login" />
-                {/* </Links>
-                </Link> */}
+                <ListItemText primary="Help" />
               </ListItem>
               <ListItem button>
-                {/* <Link href="#">
-                  <Links color="inherit"> */}
-                <ListItemText primary="Register" />
-                {/* </Links>
-                </Link> */}
+                <ListItemText primary="About Us" />
               </ListItem>
-              <Divider />
-              {sideMenuItems.map((text, index) => (
-                <React.Fragment key={index.toString()}>
-                  <ListItem
-                    button
-                    key={index.toString()}
-                    onClick={(e) => handleClick(e, index)}
-                  >
-                    <ListItemText primary={text.title} />
-                    {text.expand ? <ExpandLess /> : <ExpandMore />}
-                  </ListItem>
-                  <Collapse
-                    in={Boolean(text.expand)}
-                    timeout="auto"
-                    unmountOnExit
-                  >
-                    <List disablePadding>
-                      {Object.keys(text.subHeaders).map(
-                        (subHeadersMenu) =>
-                          text.subHeaders[subHeadersMenu] &&
-                          Array.isArray(text.subHeaders[subHeadersMenu]) &&
-                          text.subHeaders[subHeadersMenu].length > 0 &&
-                          text.subHeaders[subHeadersMenu].map((menu, i) => (
-                            <li key={`${menu.subTitle}-${i.toString()}`}>
-                              <ListItem
-                                button
-                                className={classes.nested}
-                                onClick={(event) =>
-                                  handleInClick(
-                                    event,
-                                    text.title,
-                                    subHeadersMenu,
-                                    menu.subTitle,
-                                  )
-                                }
-                              >
-                                <ListItemText primary={menu.subTitle} />
-                                {menu.expand ? <ExpandLess /> : <ExpandMore />}
-                              </ListItem>
-                              <Collapse
-                                in={Boolean(menu.expand)}
-                                timeout="auto"
-                                unmountOnExit
-                              >
-                                <div
-                                  style={{
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                    justifyContent: 'center',
-                                    padding: '20px',
-                                    gap: '20px',
-                                  }}
-                                  id="sub-menu-div"
-                                >
-                                  {menu.subTitleMenus.map((subTitleLabel) => (
-                                    // <Link
-                                    //   href="#"
-                                    //   passHref
-                                    //   key={subTitleLabel.label}
-                                    // >
-                                    //   <Links color="inherit">
-                                    <ListItemText
-                                      primary={subTitleLabel.label}
-                                      key={subTitleLabel.label}
-                                    />
-                                    //   </Links>
-                                    // </Link>
-                                  ))}
-                                </div>
-                              </Collapse>
-                            </li>
-                          )),
-                      )}
-                    </List>
-                  </Collapse>
-                </React.Fragment>
-              ))}
               <ListItem button>
                 <ListItemText primary="Logout" />
               </ListItem>

@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   appBar: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#ffffff',
     boxShadow: 'unset',
     padding: 0,
   },
