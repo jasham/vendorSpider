@@ -5,5 +5,6 @@ const URLS = {
   USERLOGIN: `${COMMON_API}adminlogin`,
   BOOKING_API: `${COMMON_API}user/booking`,
   ADDRESS_API: `${COMMON_API}address`,
+  SIGNUP_API: `${COMMON_API}vendorsignup`,
 };
 export default URLS;

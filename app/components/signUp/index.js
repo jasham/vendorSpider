@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import {
   Box,
   Button,
@@ -17,8 +17,9 @@ import {
   LOGIN_MODAL_STATUS,
   SIGN_UP_MODAL_STATUS,
 } from '../../lib/utility/type';
+import signService from '../../lib/services/signup';
 
-const styles = (theme) => ({
+const styles = () => ({
   root: {},
   textField: {
     marginBottom: 20,
@@ -45,6 +46,29 @@ const SignUp = ({ classes, open, handleClose }) => {
       value: true,
     });
   };
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
+  const [mobile, setMobile] = useState('');
+  const onSubmit = async (event) => {
+    event.preventDefault();
+    const response = await signService({
+      name,
+      mobile,
+      email,
+      password,
+    });
+    if (response.result === 'success') {
+      // eslint-disable-next-line no-console
+      console.log(response);
+      setEmail('');
+      setPassword('');
+      setName('');
+      setMobile('');
+      handleClose();
+    }
+  };
+
   return (
     <div>
       <Dialog
@@ -59,11 +83,35 @@ const SignUp = ({ classes, open, handleClose }) => {
           <DialogContentText />
           <Box className={classes.textField}>
             <TextField
+              id="name"
+              label="Name"
+              type="text"
+              fullWidth
+              value={name}
+              variant="outlined"
+              onChange={(event) => setName(event.target.value)}
+            />
+          </Box>
+          <Box className={classes.textField}>
+            <TextField
+              id="mobile"
+              label="Mobile"
+              type="text"
+              fullWidth
+              value={mobile}
+              variant="outlined"
+              onChange={(event) => setMobile(event.target.value)}
+            />
+          </Box>
+          <Box className={classes.textField}>
+            <TextField
               id="email"
               label="Email Address"
               type="email"
               fullWidth
               variant="outlined"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
             />
           </Box>
           <Box className={classes.textField}>
@@ -73,6 +121,8 @@ const SignUp = ({ classes, open, handleClose }) => {
               type="password"
               fullWidth
               variant="outlined"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
             />
           </Box>
           <Box className={classes.linkWrapper}>
@@ -84,7 +134,7 @@ const SignUp = ({ classes, open, handleClose }) => {
           </Box>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="primary">
+          <Button onClick={(event) => onSubmit(event)} color="primary">
             Submit
           </Button>
           <Button onClick={handleClose} color="primary">
