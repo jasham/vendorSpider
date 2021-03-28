@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Box } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import TextField from '@material-ui/core/TextField';
 import CloseIcon from '@material-ui/icons/Close';
+import Router from 'next/router';
 import Text from '../text';
 import Button from '../button';
+import login from '../../lib/services/login';
 
 const styles = {
   root: {
@@ -33,49 +35,61 @@ const styles = {
   },
 };
 
-const Bookings = ({ classes, onSubmit, onHandelClose, closeButton }) => (
-  <Box className={classes.root}>
-    <Box className={classes.header}>
-      <Text variant="h6" fWeight={600} ffamily="Poppins">
-        Login
-      </Text>
-      {closeButton ? (
-        <div>
-          <CloseIcon onClick={onHandelClose} />
-        </div>
-      ) : null}
+const Bookings = ({ classes, onHandelClose, closeButton }) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const onSubmit = async (event) => {
+    event.preventDefault();
+    const response = await login({ emailOrMobile: email, password });
+    if (response.result === 'success') {
+      Router.push({
+        pathname: '/vertical-tab',
+      });
+    }
+  };
+  return (
+    <Box className={classes.root}>
+      <Box className={classes.header}>
+        <Text variant="h6" fWeight={600} ffamily="Poppins">
+          Login
+        </Text>
+        {closeButton ? (
+          <div>
+            <CloseIcon onClick={onHandelClose} />
+          </div>
+        ) : null}
+      </Box>
+      <Box display="flex" style={{ gap: '10px' }} flexDirection="column">
+        <TextField
+          id="email"
+          label="Email Address"
+          type="email"
+          fullWidth
+          variant="outlined"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        {/* <div style={{ marginBottom: '10px' }} /> */}
+        <TextField
+          id="password"
+          label="Password"
+          type="password"
+          fullWidth
+          variant="outlined"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+      </Box>
+      <Box>
+        <Button className={classes.marginTop} onClick={onSubmit}>
+          Submit
+        </Button>
+      </Box>
     </Box>
-    <Box display="flex" style={{ gap: '10px' }} flexDirection="column">
-      <TextField
-        id="email"
-        label="Email Address"
-        type="email"
-        fullWidth
-        variant="outlined"
-        // value={email}
-        // onChange={(e) => setEmail(e.target.value)}
-      />
-      {/* <div style={{ marginBottom: '10px' }} /> */}
-      <TextField
-        id="password"
-        label="Password"
-        type="password"
-        fullWidth
-        variant="outlined"
-        // value={password}
-        // onChange={(e) => setPassword(e.target.value)}
-      />
-    </Box>
-    <Box>
-      <Button className={classes.marginTop} onClick={onSubmit}>
-        Submit
-      </Button>
-    </Box>
-  </Box>
-);
+  );
+};
 
 Bookings.propTypes = {
-  onSubmit: PropTypes.func,
   onHandelClose: PropTypes.func,
   closeButton: PropTypes.bool,
 };
