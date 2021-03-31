@@ -283,6 +283,7 @@ const Home = ({ classes }) => {
       let tempObj = {};
       let tempGid = {};
       let tempObj2 = {};
+      console.log('jdbhcjdsbc');
       cdata.data.map((eachData) => {
         if (eachData.sub_category) {
           tempArr2 = [];
@@ -314,21 +315,20 @@ const Home = ({ classes }) => {
             label: eachData.sub_category,
             icon_url: eachData.icon_url,
             bannerUrl: eachData.banner_url,
+            group_id: eachData.group_id,
           });
         }
         return eachData;
       });
+
       setCategorySelect(tempArr);
       setServiceList(tempObj);
       //   setGroupId(tempGid);
       setCatList(tempObj2);
+
       globalContext.allDispatch({
         type: CATEGORY_LIST,
-        value: {
-          categories: tempArr,
-          services: tempObj,
-          cGroups: tempGid,
-        },
+        value: tempArr,
       });
     });
 

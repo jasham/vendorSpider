@@ -6,8 +6,9 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import theme from '../app/components/themes';
 import { store } from '../app/lib/utility/store';
-import { reducer } from '../app/lib/utility/reducer';
+import reducer from '../app/lib/utility/reducer';
 import 'react-multi-carousel/lib/styles.css';
+import userinfo from '../app/lib/utility/getUserInfo';
 
 export const GlobalContext = React.createContext();
 let socket;
@@ -23,8 +24,15 @@ export default function MyApp(props) {
       jssStyles.parentElement.removeChild(jssStyles);
     }
     if (!socket) {
-      socket = io.connect('http://localhost:8080');
+      // socket = io.connect('http://localhost:8080/');
+      socket = io.connect('https://spidy-server.herokuapp.com');
     }
+    socket.on('booking', (msg) => {
+      userinfo().services.map((data) =>
+        // eslint-disable-next-line no-alert
+        data.group_id === msg.group_id ? alert('You got new job !!!!') : '',
+      );
+    });
   }, []);
 
   return (

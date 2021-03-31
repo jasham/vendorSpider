@@ -10,6 +10,7 @@ const login = async (data) => {
   });
   if (loginData.result === 'success') {
     document.cookie = `token=${loginData.token}`;
+    console.log('Here is login data noadjkf', loginData);
     const stringifiedData = JSON.stringify(loginData.data);
     localStorage.setItem('userInfo', stringifiedData);
   }

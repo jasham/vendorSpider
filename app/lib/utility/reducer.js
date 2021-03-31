@@ -12,13 +12,15 @@ import {
   CATEGORY_LIST,
   SERVICE_LIST,
   GROUPS_LIST,
+  GROUP_NAME,
   BOOKING_ALERT_STATUS,
   AUTH_STATUS,
   PURCHASE_DATA,
   SCHEDULED_BOOK,
+  ONLY_CATEGORY_LIST,
 } from './type';
 
-export const reducer = (state, action) => {
+const reducer = (state, action) => {
   switch (action.type) {
     case SIGN_UP_MODAL_STATUS:
       return { ...state, signUpStatus: action.value };
@@ -31,11 +33,16 @@ export const reducer = (state, action) => {
     case ERROR_TITLE:
       return { ...state, errorTitle: action.value };
     case CATEGORY_LIST:
+      console.log('Here is clist', action);
       return { ...state, categoryList: action.value };
+    case ONLY_CATEGORY_LIST:
+      return { ...state, onlyCategoryList: action.value };
     case SERVICE_LIST:
       return { ...state, serviceList: action.value };
     case GROUPS_LIST:
       return { ...state, groupList: action.value };
+    case GROUP_NAME:
+      return { ...state, groupName: action.value };
     case BOOKING_ALERT_STATUS:
       return { ...state, bookingAlertStatus: action.value };
     case AUTH_STATUS:
@@ -58,3 +65,5 @@ export const reducer = (state, action) => {
       return state;
   }
 };
+
+export default reducer;

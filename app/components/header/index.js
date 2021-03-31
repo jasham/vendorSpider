@@ -22,7 +22,7 @@ import {
   SIGN_UP_MODAL_STATUS,
   AUTH_STATUS,
 } from '../../lib/utility/type';
-// import { reducer } from '../../lib/utility/reducer';
+// import reducer from '../../lib/utility/reducer';
 import { GlobalContext } from '../../../pages/_app';
 
 const useStyles = makeStyles((theme) => ({

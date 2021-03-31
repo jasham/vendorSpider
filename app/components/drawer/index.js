@@ -199,7 +199,7 @@ const MiniDrawer = ({ children }) => {
   // };
   return (
     <>
-      <Box style={{ minHeight: '100vh' }}>
+      <Box style={{ minHeight: '100vh' }} width="100%">
         <Box className={classes.webHeader}>webheader</Box>
         <Box className={classes.drawer}>
           <AppBar

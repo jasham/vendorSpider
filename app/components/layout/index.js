@@ -10,6 +10,7 @@ import {
   SERVICE_LIST,
   GROUPS_LIST,
   CATEGORY_LIST,
+  GROUP_NAME,
 } from '../../lib/utility/type';
 import { subCatService } from '../../lib/services/home';
 import LoadingBar from '../loading';
@@ -33,6 +34,7 @@ const Layout = ({ children }) => {
       let tempArr2 = [];
       let tempObj = {};
       let tempGid = {};
+      let gName = {};
       cdata.data.map((eachData) => {
         if (eachData.sub_category && eachData.icon_url) {
           tempArr2 = [];
@@ -42,16 +44,21 @@ const Layout = ({ children }) => {
           });
           tempObj = { [eachData._id]: tempArr2, ...tempObj };
           tempGid = { [eachData._id]: eachData.group_id, ...tempGid };
+          gName = { [eachData.group_id]: eachData.sub_category, ...gName };
           tempArr.push({
             id: eachData._id,
             label: eachData.sub_category,
             icon_url: eachData.icon_url,
             bannerUrl: eachData.banner_url,
+            group_id: eachData.group_id,
           });
         }
         return eachData;
       });
-
+      globalContext.allDispatch({
+        type: GROUP_NAME,
+        value: gName,
+      });
       globalContext.allDispatch({
         type: CATEGORY_LIST,
         value: tempArr,
